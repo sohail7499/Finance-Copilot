@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate();
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +22,7 @@ function Signup() {
     e.preventDefault();
     {
       /* e.preventDefault() kyun?
-Normal HTML form submit karega to browser page reload kar sakta hai. */
+      Normal HTML form submit karega to browser page reload kar sakta hai. */
     }
 
     let hasError = false;
@@ -55,8 +57,16 @@ Normal HTML form submit karega to browser page reload kar sakta hai. */
     if (hasError) {
       return;
     }
-    console.log("singup confirm");
-    console.log({ name, email, password });
+
+    const user = {
+      id: Date.now(),
+      name,
+      email,
+    };
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("currentUser", JSON.stringify(user));
+
+    navigate("/");
   };
 
   return (
@@ -151,7 +161,9 @@ Normal HTML form submit karega to browser page reload kar sakta hai. */
               className="mt-1 w-full rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-slate-500"
             />
             {confirmPasswordError && (
-              <p className="mt-1 text-sm text-red-500">{confirmPasswordError}</p>
+              <p className="mt-1 text-sm text-red-500">
+                {confirmPasswordError}
+              </p>
             )}
           </div>
 
