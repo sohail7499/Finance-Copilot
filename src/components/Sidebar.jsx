@@ -6,8 +6,10 @@ import {
   FiCpu,
   FiUpload,
 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
+  const navigate = useNavigate();
   const sideBar = [
     { id: 1, name: "Dashboard", icon: <FiHome /> },
     { id: 2, name: "Transactions", icon: <FiCreditCard /> },
@@ -16,6 +18,11 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
     { id: 5, name: "AI Copilot", icon: <FiCpu /> },
     { id: 6, name: "Import Statement", icon: <FiUpload /> },
   ];
+
+  const handleLogout  = () => {
+    localStorage.removeItem("currentUser");
+    navigate("/login");
+  };
 
   return (
     <>
@@ -51,6 +58,13 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
               {sidebar.name}
             </button>
           ))}
+
+          <button
+            onClick={handleLogout }
+            className="mt-4 flex w-full items-center gap-3 rounded-lg px-2 py-3 font-medium hover:bg-slate-800"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </>

@@ -1,22 +1,24 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Line } from "recharts";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // Error state
+  const [loginError, setLoginError] = useState("");
 
-  {
-    /* error state */
-  }
+  // error state
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const savedUser = JSON.parse(localStorage.getItem("user"));
 
     setEmailError("");
     setPasswordError("");
+    setLoginError("");
 
     if (!email) {
       setEmailError("Email is required");
@@ -28,8 +30,16 @@ function Login() {
       return;
     }
 
-    console.log(email);
-    console.log(password);
+    if (!savedUser) {
+      setLoginError("No account found. Please sign up first.");
+      return;
+    }
+    if (email !== savedUser.email) {
+      setLoginError("Invalid email or password.");
+      return;
+    }
+    localStorage.setItem("currentUser", JSON.stringify(savedUser));
+    navigate("/");
   };
 
   return (
@@ -53,6 +63,7 @@ function Login() {
               onChange={(e) => {
                 setEmail(e.target.value);
                 setEmailError("");
+                setLoginError("");
               }}
               placeholder="Enter your email"
               className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-slate-500"
@@ -61,6 +72,10 @@ function Login() {
               <p className="mt-1 text-sm text-red-500">{emailError}</p>
             )}
           </div>
+
+          {loginError && (
+            <p className="mt-3 text-sm text-red-500"> {loginError}</p>
+          )}
 
           <div className="mt-5">
             <label className="text-sm font-medium text-slate-700">
@@ -73,6 +88,7 @@ function Login() {
               onChange={(e) => {
                 setPassword(e.target.value);
                 setPasswordError("");
+                setLoginError("");
               }}
               placeholder="Enter your password"
               className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-slate-500"
@@ -94,7 +110,7 @@ function Login() {
           Don't have an account?
           <Link
             to="/signup"
-            className="cursor-pointer font-semibold text-slate-800 hover:underline"
+            className=" font-semibold text-slate-800 hover:underline"
           >
             Sign up
           </Link>
