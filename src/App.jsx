@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import ImportStatement from "./pages/ImportStatement";
 
 function DashboardLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -45,6 +46,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <DashboardLayout />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/import"
+            element={
+              <ProtectedRoute>
+                <ImportStatement />
               </ProtectedRoute>
             }
           />
