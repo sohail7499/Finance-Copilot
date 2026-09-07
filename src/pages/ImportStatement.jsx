@@ -19,10 +19,15 @@ function ImportStatement() {
     const headerIndex = rows.findIndex((row) =>
       row.includes("Transaction Date"),
     );
-    console.log(headerIndex);
-    
+    // console.log(headerIndex);
+
     const transactionRow = rows.slice(headerIndex + 1);
-    console.log(transactionRow);
+    // console.log(transactionRow);
+
+    const transactions = transactionRow.filter((row) => {
+      return row.trim().match(/^"?\d/);
+    });
+    console.log(transactions);
   };
   return (
     <>

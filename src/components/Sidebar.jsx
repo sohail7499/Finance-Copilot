@@ -19,7 +19,7 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
     { id: 6, name: "Import Statement", icon: <FiUpload /> },
   ];
 
-  const handleLogout  = () => {
+  const handleLogout = () => {
     localStorage.removeItem("currentUser");
     navigate("/login");
   };
@@ -51,16 +51,21 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
             <button
               key={sidebar.id}
               className="flex w-full items-center gap-3 rounded-lg px-2 py-3 font-medium hover:bg-slate-800"
-              onClick={() => setIsSidebarOpen(false)}
+              onClick={() => {
+                setIsSidebarOpen(false);
+
+                if (sidebar.name === "Import Statement") {
+                  navigate("/import");
+                }
+              }}
             >
               <span className="text-xl">{sidebar.icon}</span>
-
               {sidebar.name}
             </button>
           ))}
 
           <button
-            onClick={handleLogout }
+            onClick={handleLogout}
             className="mt-4 flex w-full items-center gap-3 rounded-lg px-2 py-3 font-medium hover:bg-slate-800"
           >
             Logout
