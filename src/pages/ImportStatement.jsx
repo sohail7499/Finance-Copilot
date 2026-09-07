@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Papa from "papaparse";
 
 function ImportStatement() {
   const [file, setFile] = useState(null);
@@ -27,7 +28,24 @@ function ImportStatement() {
     const transactions = transactionRow.filter((row) => {
       return row.trim().match(/^"?\d/);
     });
-    console.log(transactions);
+    // console.log(transactions);
+
+    const transactionObjects = transactions.map((row) => {
+      const result = Papa.parse(row);
+      // CSV ki ek row ko parse karke uske columns ko alag-alag values mein convert karta hai.
+      const values = result.data[0];
+      // Papa.parse ke result.data mein rows ka array aata hai, [0] se first row milti hai.
+      return {
+        id: Number(values[0]),
+        date: values[1],
+        description: values[3],
+        amount: parseFloat(values[5].replace(/,/g, "")),
+        // Amount ke saare commas remove karke string ko number mein convert karta hai.
+        type: values[6],
+        balance: parseFloat(values[7].replace(/,/g, "")),
+      };
+    });
+    console.log(transactionObjects);
   };
   return (
     <>
