@@ -46,6 +46,20 @@ function ImportStatement() {
       };
     });
     console.log(transactionObjects);
+
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    //localStorage se currently logged-in user ka data nikaalo aur JSON string ko JavaScript object mein convert karo.
+    console.log(currentUser);
+    console.log(currentUser.id);
+
+    const savedTransactions = JSON.parse(
+      localStorage.getItem("transactions") || "{}",
+    );
+    //localStorage se saved transactions nikaalo aur unhe JavaScript object mein convert karo. Agar transactions abhi saved hi nahi hain, to empty object {} se start karo.
+    savedTransactions[currentUser.id] = transactionObjects;
+    console.log(savedTransactions);
+
+    localStorage.setItem("transactions", JSON.stringify(savedTransactions));
   };
   return (
     <>
