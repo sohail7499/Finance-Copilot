@@ -54,8 +54,14 @@ function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
               onClick={() => {
                 setIsSidebarOpen(false);
 
+                if (sidebar.name === "Dashboard") {
+                  navigate("/");
+                }
                 if (sidebar.name === "Import Statement") {
                   navigate("/import");
+                }
+                if (sidebar.name === "Transactions") {
+                  navigate("/transaction");
                 }
               }}
             >

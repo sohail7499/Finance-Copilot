@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
@@ -28,7 +28,7 @@ function DashboardLayout() {
         />
 
         <div className="flex-1 overflow-y-auto">
-          <Dashboard />
+          <Outlet />
         </div>
       </div>
     </div>
@@ -42,30 +42,12 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <DashboardLayout />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/import"
-            element={
-              <ProtectedRoute>
-                <ImportStatement />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/transaction"
-            element={
-              <ProtectedRoute>
-                <Transactions />
-              </ProtectedRoute>
-            }
-          />
+          
+          <Route element={<DashboardLayout />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/import" element={<ImportStatement />} />
+            <Route path="/transaction" element={<Transactions />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
