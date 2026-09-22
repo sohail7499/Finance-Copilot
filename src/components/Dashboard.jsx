@@ -44,7 +44,7 @@ function Dashboard() {
       id: 2,
       title: "Monthly Income",
       amount: `₹${totalIncome.toLocaleString("en-IN")}`,
-      change: "+8.2%",
+      // change: "+8.2%",
       icon: FiTrendingUp,
     },
     {
@@ -58,7 +58,7 @@ function Dashboard() {
       id: 4,
       title: "Savings",
       amount: `₹${savings.toLocaleString("en-IN")}`,
-      change: "+15.3%",
+      change: "",
       icon: FiPieChart,
     },
   ];
@@ -72,7 +72,7 @@ function Dashboard() {
       </p>
 
       {/* Dashboard sections will come here */}
-      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-6 content-between grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {summaryCards.map((card) => {
           const Icon = card.icon;
           return (
@@ -83,10 +83,19 @@ function Dashboard() {
               <p className="flex items-center gap-1 text-sm font-medium text-slate-500">
                 <span>
                   <Icon />
-                </span>
+                </span> 
                 {card.title}
               </p>
-              <h2 className="mt-2 text-2xl font-bold text-slate-800">
+
+              <h2
+                className={`mt-2 text-2xl font-bold ${
+                  card.id === 4
+                    ? savings >= 0
+                      ? "text-green-600"
+                      : "text-red-600"
+                    : "text-slate-800"
+                }`}
+              >
                 {card.amount}
               </h2>
               <p className="mt-2 text-sm font-medium text-green-600">
