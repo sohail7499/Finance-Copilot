@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
@@ -8,6 +8,8 @@ import Signup from "./pages/Signup";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import ImportStatement from "./pages/ImportStatement";
 import Transactions from "./pages/Transactions";
+import { setTransactions } from "./features/transactionSlice";
+import { useDispatch } from "react-redux";
 
 function DashboardLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -36,13 +38,28 @@ function DashboardLayout() {
 }
 
 function App() {
+  const dispatch = useDispatch();
+
+  const currentUser = JSON.parse(localStorage.getItem("currentUser") || "null");
+  const savedTransactions = JSON.parse(
+    localStorage.getItem("transactions") || "{}",
+  );
+
+  const usedTransaction = currentUser
+    ? savedTransactions[currentUser.id] || []
+    : [];
+  useEffect(() => {
+    dispatch(setTransactions(usedTransaction));
+     //usedTransaction mein jo transactions ka data hai, usko setTransaction action ke through Redux Store mein bhejo.
+  }, []);
+
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          
+
           <Route element={<DashboardLayout />}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/import" element={<ImportStatement />} />

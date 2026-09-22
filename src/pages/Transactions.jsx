@@ -1,27 +1,10 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addTransactions, setTransactions } from "../features/transactionSlice";
+import { useSelector } from "react-redux";
 
 function Transactions() {
-  const dispatch = useDispatch();
-
   const transactions = useSelector((state) => state.transaction.transactions);
+  //Redux ke transaction state ke andar jo transactions array hai, usko transactions variable mein le aao.
 
-  const currentUser = JSON.parse(localStorage.getItem("currentUser") || "null");
-  const savedTransactions = JSON.parse(
-    localStorage.getItem("transactions") || "{}",
-  );
-
-  const usedTransaction = currentUser
-    ? savedTransactions[currentUser.id] || []
-    : [];
-
-  useEffect(() => {
-    dispatch(setTransactions(usedTransaction));
-    //usedTransaction mein jo transactions ka data hai, usko setTransaction action ke through Redux Store mein bhejo.
-  }, []);
-
-  if (usedTransaction.length === 0) {
+  if (transactions.length === 0) {
     return (
       <div className="p-4 text-center text-slate-500 text-sm">
         No transactions found.

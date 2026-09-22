@@ -7,28 +7,46 @@ import {
 import SpendingCharts from "./SpendingCharts";
 import ExpenseChart from "./ExpenseChart";
 import IncomeExpenseChart from "./IncomeExpenseChart";
+import { useSelector } from "react-redux";
 
 function Dashboard() {
+  const transactions = useSelector((state) => state.transaction.transactions);
+
+  const totalIncome = transactions.reduce((acc, transaction) => {
+    if (transaction.type === "CR") {
+      return acc + transaction.amount;
+    }
+
+    return acc;
+  }, 0);
+
+  const totalExpanse = transactions.reduce((acc, transaction) => {
+    if (transaction.type === "DR") {
+      return acc + transaction.amount;
+    }
+    return acc;
+  }, 0);
+
   const summaryCards = [
     {
       id: 1,
       title: "Total Balance",
-      amount: "₹85,240",
-      change: "+12.4%",
+      amount: `0,0000`,
+      // change: "+12.4%",
       icon: FiDollarSign,
     },
     {
       id: 2,
       title: "Monthly Income",
-      amount: "₹50,000",
+      amount: `₹${totalIncome.toLocaleString("en-IN")}`,
       change: "+8.2%",
       icon: FiTrendingUp,
     },
     {
       id: 3,
       title: "Total Expenses",
-      amount: "₹32,400",
-      change: "-4.1%",
+      amount: `₹${totalExpanse.toLocaleString("en-IN")}`,
+      // change: "-4.1%",
       icon: FiCreditCard,
     },
     {
