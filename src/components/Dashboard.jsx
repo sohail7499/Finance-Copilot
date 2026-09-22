@@ -20,18 +20,23 @@ function Dashboard() {
     return acc;
   }, 0);
 
-  const totalExpanse = transactions.reduce((acc, transaction) => {
+  const totalExpense = transactions.reduce((acc, transaction) => {
     if (transaction.type === "DR") {
       return acc + transaction.amount;
     }
     return acc;
   }, 0);
 
+  const savings = totalIncome - totalExpense;
+
+  const lastTransaction = transactions[transactions.length - 1];
+  const totalBalance = lastTransaction?.balance || 0;
+
   const summaryCards = [
     {
       id: 1,
       title: "Total Balance",
-      amount: `0,0000`,
+      amount: `₹${totalBalance.toLocaleString("en-IN")}`,
       // change: "+12.4%",
       icon: FiDollarSign,
     },
@@ -45,14 +50,14 @@ function Dashboard() {
     {
       id: 3,
       title: "Total Expenses",
-      amount: `₹${totalExpanse.toLocaleString("en-IN")}`,
+      amount: `₹${totalExpense.toLocaleString("en-IN")}`,
       // change: "-4.1%",
       icon: FiCreditCard,
     },
     {
       id: 4,
       title: "Savings",
-      amount: "₹17,600",
+      amount: `₹${savings.toLocaleString("en-IN")}`,
       change: "+15.3%",
       icon: FiPieChart,
     },
