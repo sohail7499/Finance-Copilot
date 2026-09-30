@@ -75,7 +75,7 @@ function IncomeExpenseChart() {
     "Jun",
     "Jul",
     "Aug",
-    "Sep",
+    "Sep",  
     "Oct",
     "Nov",
     "Dec",
