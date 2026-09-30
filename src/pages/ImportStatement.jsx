@@ -87,7 +87,7 @@ function ImportStatement() {
               type="file"
               accept=".csv"
               className="hidden"
-              onClick={handleFileChange}
+              onChange={handleFileChange}
             />
           </label>
 

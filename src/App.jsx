@@ -50,7 +50,7 @@ function App() {
     : [];
   useEffect(() => {
     dispatch(setTransactions(usedTransaction));
-     //usedTransaction mein jo transactions ka data hai, usko setTransaction action ke through Redux Store mein bhejo.
+    //usedTransaction mein jo transactions ka data hai, usko setTransaction action ke through Redux Store mein bhejo.
   }, []);
 
   return (
@@ -60,7 +60,13 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
-          <Route element={<DashboardLayout />}>
+          <Route
+            element={
+              <ProtectedRoute>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route path="/" element={<Dashboard />} />
             <Route path="/import" element={<ImportStatement />} />
             <Route path="/transaction" element={<Transactions />} />
