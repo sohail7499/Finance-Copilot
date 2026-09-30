@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Papa from "papaparse";
+import { useNavigate } from "react-router-dom";
+import { setTransactions } from "../features/transactionSlice";
 
 function ImportStatement() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
@@ -60,6 +65,8 @@ function ImportStatement() {
     console.log(savedTransactions);
 
     localStorage.setItem("transactions", JSON.stringify(savedTransactions));
+
+    dispatch(setTransactions(transactionObjects));
   };
   return (
     <>
