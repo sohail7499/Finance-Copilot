@@ -67,6 +67,7 @@ function ImportStatement() {
     localStorage.setItem("transactions", JSON.stringify(savedTransactions));
 
     dispatch(setTransactions(transactionObjects));
+    navigate("/");
   };
   return (
     <>
